@@ -1,0 +1,19 @@
+{
+	"name": "api",
+	"version": "1.0.0",
+	"description": "api project for studies",
+	"main": "index.js",
+	"scripts": {
+		"start": "nodemon index.js"
+	},
+	"author": "Piotr Cichowlas",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^15.0.0",
+		"express": "^4.17.2",
+		"mongoose": "^6.1.10"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.15"
+	}
+}
