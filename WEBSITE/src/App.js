@@ -4,7 +4,7 @@ import Button from './components/shared/Button';
 import styled from 'styled-components';
 
 function App() {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	return (
 		<Wrapper>
 			<div className='App'>

@@ -11,11 +11,14 @@ const theme = {
 };
 
 ReactDOM.render(
-	<ThemeProvider theme={theme}>
-		<React.StrictMode>
-			<Router />
-		</React.StrictMode>
-	</ThemeProvider>,
+	<React.StrictMode>
+		<div style={{ maxWidth: '100%' }}>
+			<ThemeProvider theme={theme}>
+				<Router />
+			</ThemeProvider>
+		</div>
+	</React.StrictMode>,
+
 	document.getElementById('root')
 );
 
