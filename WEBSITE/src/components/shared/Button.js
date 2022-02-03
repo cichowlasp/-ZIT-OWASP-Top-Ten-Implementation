@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ children }) => {
-	return <StyledButton>{children}</StyledButton>;
+const Button = (props) => {
+	return <StyledButton {...props}>{props.children}</StyledButton>;
 };
 
 const StyledButton = styled.button`
