@@ -33,12 +33,14 @@ const Router = () => {
 };
 const Wrapper = styled.div`
 	max-height: 100%;
-	max-width: 100%;
-	position: relative;
+	height: 100%;
+	width: 100%;
+	overflow-y: hidden;
 `;
 
 const Nav = styled.nav`
 	position: absolute;
+	top: 0;
 	left: 0;
 	right: 0;
 	height: 7rem;

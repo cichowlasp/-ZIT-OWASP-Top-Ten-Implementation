@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import TextField from '../../components/shared/TextField';
 import Button from '../../components/shared/Button';
 import { register } from '../../actions/actions';
-import { Container } from './Elements';
+import { Container, ErrorMessage } from './Elements';
+import { registerValidation } from '../../validation';
 
-const Login = () => {
+const Register = () => {
 	const [data, setData] = useState({
 		email: '',
 		password: '',
 		passwordRepeat: '',
 		name: '',
 	});
+	const [error, setError] = useState('');
+
 	const handleRegister = async () => {
 		const { email, password, passwordRepeat, name } = data;
-		if (email && password && password === passwordRepeat) {
+		const validation = registerValidation(data);
+		setError(validation.error ? validation.error.message : '');
+		if (
+			email &&
+			password &&
+			password === passwordRepeat &&
+			!validation.error
+		) {
 			await register({ email, password, name });
 		}
 	};
@@ -42,10 +52,11 @@ const Login = () => {
 				onChange={(e) => setData({ ...data, name: e.target.value })}
 				placeholder='Name'
 			/>
+			<ErrorMessage>{error}</ErrorMessage>
 
 			<Button onClick={handleRegister}>Register</Button>
 		</Container>
 	);
 };
 
-export default Login;
+export default Register;

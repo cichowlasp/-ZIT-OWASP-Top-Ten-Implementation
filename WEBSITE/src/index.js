@@ -12,11 +12,9 @@ const theme = {
 
 ReactDOM.render(
 	<React.StrictMode>
-		<div style={{ maxWidth: '100%' }}>
-			<ThemeProvider theme={theme}>
-				<Router />
-			</ThemeProvider>
-		</div>
+		<ThemeProvider theme={theme}>
+			<Router />
+		</ThemeProvider>
 	</React.StrictMode>,
 
 	document.getElementById('root')
