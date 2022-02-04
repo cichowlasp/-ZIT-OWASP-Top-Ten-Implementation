@@ -2,32 +2,52 @@ import React from 'react';
 import App from '../../App';
 import Login from '../../pages/Login/Login';
 import Register from '../../pages/Register/Register';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Posts from '../../pages/Posts/Posts';
+import { Link, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import {
+	removeTokenFromSessionStorage,
+	loadTokenFromSessionStorage,
+} from '../../actions/actions';
 
 const Router = () => {
+	const navigate = useNavigate();
 	return (
 		<Wrapper>
 			<Nav>
 				<ul>
-					<li>
-						<a href='/'>Home</a>
-					</li>
-					<li>
-						<a href='/login'>Login</a>
-					</li>
-					<li>
-						<a href='/register'>Register</a>
-					</li>
+					{!loadTokenFromSessionStorage() ? (
+						<>
+							<li>
+								<Link to='/'>Home</Link>
+							</li>
+							<li>
+								<Link to='/login'>Login</Link>
+							</li>
+							<li>
+								<Link to='/register'>Register</Link>
+							</li>
+						</>
+					) : (
+						<li>
+							<div
+								onClick={() => {
+									removeTokenFromSessionStorage();
+									navigate('/');
+								}}>
+								Log out
+							</div>
+						</li>
+					)}
 				</ul>
 			</Nav>
-			<BrowserRouter>
-				<Routes>
-					<Route path='/' element={<App />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/login' element={<Login />} />
-				</Routes>
-			</BrowserRouter>
+			<Routes>
+				<Route path='/' element={<App />} />
+				<Route path='/register' element={<Register />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/posts' element={<Posts />} />
+			</Routes>
 		</Wrapper>
 	);
 };
@@ -68,7 +88,8 @@ const Nav = styled.nav`
 			font-size: 1.5rem;
 			text-transform: none;
 			font-weight: bold;
-			a {
+			a,
+			div {
 				color: black;
 				&:link {
 					text-decoration: none;

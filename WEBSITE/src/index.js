@@ -4,6 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Router from './components/Router/Router';
 import { ThemeProvider } from 'styled-components';
+import { BrowserRouter } from 'react-router-dom';
 
 const theme = {
 	fg: 'palevioletred',
@@ -12,9 +13,11 @@ const theme = {
 
 ReactDOM.render(
 	<React.StrictMode>
-		<ThemeProvider theme={theme}>
-			<Router />
-		</ThemeProvider>
+		<BrowserRouter>
+			<ThemeProvider theme={theme}>
+				<Router />
+			</ThemeProvider>
+		</BrowserRouter>
 	</React.StrictMode>,
 
 	document.getElementById('root')

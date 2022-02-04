@@ -19,3 +19,10 @@ export const ErrorMessage = styled.div`
 	font-weight: 600;
 	text-align: center;
 `;
+
+export const Form = styled.form`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+`;

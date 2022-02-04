@@ -15,7 +15,7 @@ mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
 });
 
 //Middleware
-app.use(cors({ origin: "http://localhost:3001", optionsSuccessStatus: 200 }));
+app.use(cors({ origin: 'http://localhost:3001', optionsSuccessStatus: 200 }));
 app.use(express.json());
 //Route Middlewares
 app.use('/api/user', authRoute);

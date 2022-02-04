@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import Button from '../../components/shared/Button';
 import TextField from '../../components/shared/TextField';
-import Cookies from 'js-cookie';
-import { login } from '../../actions/actions';
+import { login, saveTokeToSessionStorage } from '../../actions/actions';
 import { Container, ErrorMessage, Form } from './Elements';
 import { loginValidation } from '../../validation';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [data, setData] = useState({
 		email: '',
 		password: '',
 	});
+	const navigate = useNavigate();
 	const [error, setError] = useState('');
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -19,7 +20,8 @@ const Login = () => {
 		setError(validation.error ? validation.error.message : '');
 		if (email && password && !error) {
 			const token = await login({ email, password });
-			Cookies.set('token', token);
+			saveTokeToSessionStorage(token);
+			navigate('/posts');
 		}
 	};
 	return (
