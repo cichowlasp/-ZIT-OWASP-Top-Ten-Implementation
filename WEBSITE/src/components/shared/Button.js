@@ -16,12 +16,12 @@ const StyledButton = styled.button`
 	font-weight: bold;
 	color: ${(props) => props.theme.fg};
 	margin: 1rem;
-	&:hover {
-		cursor: pointer;
+	&:focus {
 		color: ${(props) => props.theme.bg};
 		background-color: ${(props) => props.theme.fg};
 	}
-	&:focus {
+	&:hover {
+		cursor: pointer;
 		color: ${(props) => props.theme.bg};
 		background-color: ${(props) => props.theme.fg};
 	}

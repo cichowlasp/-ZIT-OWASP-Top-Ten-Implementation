@@ -51,6 +51,7 @@ const Nav = styled.nav`
 	justify-content: center;
 	align-items: center;
 	border-radius: 0 0 1.5rem 1.5rem;
+	border: 0.2rem solid black;
 	ul {
 		height: 100%;
 		display: flex;

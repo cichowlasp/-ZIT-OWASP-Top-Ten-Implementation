@@ -9,6 +9,13 @@ export const Container = styled.div`
 	flex-direction: column;
 `;
 
+export const Form = styled.form`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+`;
+
 export const ErrorMessage = styled.div`
 	display: flex;
 	height: 2rem;
