@@ -5,7 +5,7 @@ import Register from '../../pages/Register/Register';
 import Posts from '../../pages/Posts/Posts';
 import { Link, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import {
 	removeTokenFromSessionStorage,
 	loadTokenFromSessionStorage,
@@ -20,7 +20,9 @@ const Router = () => {
 					{!loadTokenFromSessionStorage() ? (
 						<>
 							<li>
-								<Link to='/'>Home</Link>
+								<Link to='/' exact>
+									Home
+								</Link>
 							</li>
 							<li>
 								<Link to='/login'>Login</Link>
@@ -43,13 +45,67 @@ const Router = () => {
 				</ul>
 			</Nav>
 			<Routes>
-				<Route path='/' element={<App />} />
-				<Route path='/register' element={<Register />} />
-				<Route path='/login' element={<Login />} />
-				<Route path='/posts' element={<Posts />} />
+				<Route
+					path='/'
+					element={
+						<CheckIfSessionIsValid>
+							<App />
+						</CheckIfSessionIsValid>
+					}
+				/>
+				<Route
+					path='/register'
+					element={
+						<CheckIfSessionIsValid>
+							<Register />
+						</CheckIfSessionIsValid>
+					}
+				/>
+				<Route
+					path='/login'
+					element={
+						<CheckIfSessionIsValid>
+							<Login />
+						</CheckIfSessionIsValid>
+					}
+				/>
+				<Route
+					path='/posts'
+					element={
+						<RequireAuth>
+							<Posts />
+						</RequireAuth>
+					}
+				/>
+				<Route
+					path='*'
+					element={
+						<CheckIfSessionIsValid>
+							<App />
+						</CheckIfSessionIsValid>
+					}
+				/>
 			</Routes>
 		</Wrapper>
 	);
+};
+
+const RequireAuth = ({ children }) => {
+	let location = useLocation();
+	const auth = loadTokenFromSessionStorage();
+	if (!auth) {
+		return <Navigate to='/' state={{ from: location }} replace />;
+	}
+	return children;
+};
+
+const CheckIfSessionIsValid = ({ children }) => {
+	let location = useLocation();
+	const auth = loadTokenFromSessionStorage();
+	if (auth) {
+		return <Navigate to='/posts' state={{ from: location }} />;
+	}
+	return children;
 };
 
 const Wrapper = styled.div`
