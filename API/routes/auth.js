@@ -45,7 +45,6 @@ router.post('/login', async (req, res) => {
 		return res.status(400).send("User doesn't exisits. Create an account.");
 
 	const validPassword = await bcrypt.compare(password, user.password);
-	console.log(validPassword);
 	if (!validPassword)
 		return res.status(400).send('Invalid email or password');
 	const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);

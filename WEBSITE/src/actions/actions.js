@@ -37,17 +37,25 @@ export const getPosts = async () => {
 };
 
 export const addPost = async ({ title, descryption }) => {
-	console.log(title, descryption);
 	const token = loadTokenFromSessionStorage();
-	const res = await axios.post(
+	await axios.post(
 		`${API_URL}/api/posts/add-post`,
 		{ token, title, descryption },
 		{
 			headers: { 'auth-token': token },
 		}
 	);
-	console.log(res);
-	console.log(res.data);
+};
+
+export const removePost = async (_id) => {
+	const token = loadTokenFromSessionStorage();
+	await axios.post(
+		`${API_URL}/api/posts/remove-post`,
+		{ _id },
+		{
+			headers: { 'auth-token': token },
+		}
+	);
 };
 
 export const saveTokeToSessionStorage = (token) => {

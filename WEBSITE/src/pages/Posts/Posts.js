@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { getPosts, addPost } from '../../actions/actions';
-import { useAsync } from 'react-use';
+import { getPosts, addPost, removePost } from '../../actions/actions';
+import { useAsyncRetry } from 'react-use';
 import Button from '../../components/shared/Button';
 import TextField from '../../components/shared/TextField';
 import styled from 'styled-components';
 
 const Posts = () => {
-	const [data, setData] = useState({
+	const initData = {
 		title: '',
 		descryption: '',
-	});
-	const state = useAsync(async () => {
+	};
+	const [data, setData] = useState(initData);
+	let state = useAsyncRetry(async () => {
 		return await getPosts();
 	});
 
@@ -18,13 +19,21 @@ const Posts = () => {
 		<Wrapper>
 			<Side>
 				<h1>Add Post</h1>
-				<Form onSubmit={() => addPost(data)}>
+				<Form
+					onSubmit={async (e) => {
+						e.preventDefault();
+						await addPost(data);
+						state.retry();
+						setData(initData);
+					}}>
 					<TextField
+						value={data.title}
 						onChange={(e) =>
 							setData({ ...data, title: e.target.value })
 						}
 						placeholder='Title'></TextField>
 					<TextField
+						value={data.descryption}
 						placeholder='Descryption'
 						onChange={(e) =>
 							setData({ ...data, descryption: e.target.value })
@@ -38,6 +47,14 @@ const Posts = () => {
 				<CardContainer>
 					{state?.value?.map((el) => (
 						<PostCard key={el._id}>
+							<RemoveButton
+								role='button'
+								onClick={async () => {
+									await removePost(el._id);
+									state.retry();
+								}}>
+								x
+							</RemoveButton>
 							<Title>{el.title}</Title>
 							<Description>{el.descryption}</Description>
 						</PostCard>
@@ -47,6 +64,27 @@ const Posts = () => {
 		</Wrapper>
 	);
 };
+
+const RemoveButton = styled.div`
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 5px;
+	padding: 5px;
+	background-color: red;
+	height: 10px;
+	width: 10px;
+	text-align: center;
+	border-radius: 50%;
+	line-height: 8px;
+	vertical-align: middle;
+	font-weight: bold;
+	color: white;
+	&:hover {
+		cursor: pointer;
+		opacity: 50%;
+	}
+`;
 
 const Form = styled.form`
 	display: flex;
@@ -65,6 +103,7 @@ const Line = styled.div`
 `;
 
 const Title = styled.div`
+	margin-top: 10px;
 	font-size: 1.5rem;
 	font-weight: 500;
 	text-transform: capitalize;
@@ -83,6 +122,7 @@ const PostCard = styled.div`
 	border-radius: 1rem;
 	text-align: left;
 	margin-bottom: 1rem;
+	position: relative;
 `;
 
 const Side = styled.div`
