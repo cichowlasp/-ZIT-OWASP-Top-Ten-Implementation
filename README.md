@@ -12,7 +12,8 @@ Porjekt składa się z api oraz prostej strony zbudowanej w reactcie. W projekci
 Aby uruchomić projekt należy posiadać zainstalowanego noda. Następnie w folderze API oraz WEBSITE wykonc polecenie npm start. W przeglądarce powinno uruchomić nam się okno z serwisem, jeśli tak sie nie stanie należy wpisać w przeglądarce adres localhost:3001 (api działa na porcie 3000)
 
 ## Zdjęcia:
-- ![screen1](/1.png)
-- ![screen2](/2.png)
-- ![screen3](/3.png)
-- ![screen4](/4.png)
+|                                  |                                |
+| ----------------------------------------- | ---------------------------------------- |
+| ![screen1](/1.png)    | ![screen2](/2.png)      |
+| ![screen3](/3.png) | ![screen4](/4.png)  |
+
