@@ -1,28 +1,68 @@
-import React from 'react';
-import { getPosts } from '../../actions/actions';
+import React, { useState } from 'react';
+import { getPosts, addPost } from '../../actions/actions';
 import { useAsync } from 'react-use';
+import Button from '../../components/shared/Button';
+import TextField from '../../components/shared/TextField';
 import styled from 'styled-components';
 
 const Posts = () => {
+	const [data, setData] = useState({
+		title: '',
+		descryption: '',
+	});
 	const state = useAsync(async () => {
 		return await getPosts();
-	}, []);
+	});
 
 	return (
 		<Wrapper>
-			<div>
+			<Side>
 				<h1>Add Post</h1>
-			</div>
-			<div>
+				<Form onSubmit={() => addPost(data)}>
+					<TextField
+						onChange={(e) =>
+							setData({ ...data, title: e.target.value })
+						}
+						placeholder='Title'></TextField>
+					<TextField
+						placeholder='Descryption'
+						onChange={(e) =>
+							setData({ ...data, descryption: e.target.value })
+						}></TextField>
+					<Button type='submit'>Add</Button>
+				</Form>
+			</Side>
+			<Line />
+			<Side>
 				<h1>Posts</h1>
-				<PostCard>
-					<Title>{state?.value?.title}</Title>
-					<Description>{state?.value?.description}</Description>
-				</PostCard>
-			</div>
+				<CardContainer>
+					{state?.value?.map((el) => (
+						<PostCard key={el._id}>
+							<Title>{el.title}</Title>
+							<Description>{el.descryption}</Description>
+						</PostCard>
+					))}
+				</CardContainer>
+			</Side>
 		</Wrapper>
 	);
 };
+
+const Form = styled.form`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	input {
+		max-width: 50%;
+	}
+`;
+
+const Line = styled.div`
+	height: 80%;
+	width: 0;
+	border: 2px solid black;
+`;
 
 const Title = styled.div`
 	font-size: 1.5rem;
@@ -42,15 +82,31 @@ const PostCard = styled.div`
 	border: 0.3rem solid black;
 	border-radius: 1rem;
 	text-align: left;
+	margin-bottom: 1rem;
+`;
+
+const Side = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	max-height: calc(100% - 10rem);
 `;
 
 const Wrapper = styled.div`
 	height: 100%;
-	width: 100%;
+	max-width: 100%;
 	display: flex;
-	justify-content: space-around;
 	margin-top: 10rem;
 	text-align: center;
+	justify-content: center;
+`;
+const CardContainer = styled.div`
+	display: flex;
+	height: 100%;
+	width: 100;
+	flex-direction: column;
+	overflow-y: auto;
+	align-items: center;
 `;
 
 export default Posts;

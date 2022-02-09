@@ -7,7 +7,6 @@ export const login = async ({ email, password }) => {
 		email,
 		password,
 	});
-	console.log(resp);
 	if (resp.status === 200) {
 		return resp;
 	} else {
@@ -31,10 +30,24 @@ export const register = async ({ email, password, name }) => {
 export const getPosts = async () => {
 	const token = loadTokenFromSessionStorage();
 
-	const res = await axios.get(`${API_URL}/api/posts`, {
+	const res = await axios.get(`${API_URL}/api/posts/get-posts`, {
 		headers: { 'auth-token': token },
 	});
 	return res.data;
+};
+
+export const addPost = async ({ title, descryption }) => {
+	console.log(title, descryption);
+	const token = loadTokenFromSessionStorage();
+	const res = await axios.post(
+		`${API_URL}/api/posts/add-post`,
+		{ token, title, descryption },
+		{
+			headers: { 'auth-token': token },
+		}
+	);
+	console.log(res);
+	console.log(res.data);
 };
 
 export const saveTokeToSessionStorage = (token) => {

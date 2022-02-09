@@ -51,6 +51,7 @@ const Router = () => {
 		</Wrapper>
 	);
 };
+
 const Wrapper = styled.div`
 	max-height: 100%;
 	height: 100%;
@@ -101,6 +102,7 @@ const Nav = styled.nav`
 				&:focus,
 				:hover {
 					color: ${(props) => props.theme.bg};
+					cursor: pointer;
 				}
 			}
 		}
