@@ -20,9 +20,7 @@ const Router = () => {
 					{!loadTokenFromSessionStorage() ? (
 						<>
 							<li>
-								<Link to='/' exact>
-									Home
-								</Link>
+								<Link to='/'>Home</Link>
 							</li>
 							<li>
 								<Link to='/login'>Login</Link>

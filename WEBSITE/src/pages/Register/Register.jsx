@@ -5,6 +5,7 @@ import { register, saveTokeToSessionStorage } from '../../actions/actions';
 import { Container, ErrorMessage, Form } from './Elements';
 import { registerValidation } from '../../validation';
 import { useNavigate } from 'react-router-dom';
+import { top10kPasswords } from './rockyou';
 
 const Register = () => {
 	const [data, setData] = useState({
@@ -21,14 +22,15 @@ const Register = () => {
 		const { email, password, passwordRepeat, name } = data;
 		const validation = registerValidation(data);
 		setError(validation.error ? validation.error.message : '');
-		if (
+		if (top10kPasswords.includes(password)) {
+			setError('Password is too popular');
+		} else if (
 			email &&
 			password &&
 			password === passwordRepeat &&
 			!validation.error
 		) {
 			const token = await register({ email, password, name });
-			console.log(token);
 			saveTokeToSessionStorage(token);
 			navigate('/posts');
 		}

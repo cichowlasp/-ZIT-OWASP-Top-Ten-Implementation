@@ -6,7 +6,7 @@ export const registerValidation = (user) => {
 			.min(6)
 			.required()
 			.email({ tlds: { allow: false } }),
-		password: Joi.string().min(4).required(),
+		password: Joi.string().min(8).required(),
 		passwordRepeat: Joi.ref('password'),
 		name: Joi.string().min(4).required(),
 	});
@@ -19,7 +19,7 @@ export const loginValidation = (user) => {
 			.min(6)
 			.required()
 			.email({ tlds: { allow: false } }),
-		password: Joi.string().min(4).required(),
+		password: Joi.string().min(8).required(),
 	});
 	return schema.validate(user);
 };
